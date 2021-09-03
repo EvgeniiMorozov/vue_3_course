@@ -1,15 +1,24 @@
 <template>
-  <div>
-    <div class="post" v-for="post in posts" :key="post.id">
-      <div><strong>Название:</strong> {{post.title}}</div>
-      <div><strong>Описание:</strong> {{post.body}}</div>
-    </div>
+  <div class="app">
+    <post-form
+        @create="createPost"
+    />
+    <post-list
+        :posts="posts"
+    />
+
   </div>
 </template>
 
 <script>
+import PostForm from "@/components/PostForm";
+import PostList from "@/components/PostList";
+
 export default {
   name: "App",
+  components: {
+    PostList, PostForm
+  },
   data() {
     return {
       posts: [
@@ -18,10 +27,18 @@ export default {
         {id: 3, title: 'JavaScript 3', body: 'Описание поста 3'},
         {id: 4, title: 'JavaScript 4', body: 'Описание поста 4'},
         {id: 5, title: 'JavaScript 5', body: 'Описание поста 5'},
-      ]
+      ],
     }
   },
-  methods: {},
+  methods: {
+    createPost(post) {
+      this.posts.push(post)
+    },
+    // можно обойтись и без этой функции
+    // inputTitle(event) {
+    //   this.title = event.target.value;
+    // }
+  },
 }
 </script>
 
@@ -32,10 +49,13 @@ export default {
   box-sizing: border-box;
 }
 
-.post {
-  margin-top: 15px;
-  padding: 15px;
-  border: 2px solid teal;
+.app {
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }
 </style>
 
